@@ -1,18 +1,20 @@
 # Verification — 30 October 2026
 
-| Check | Result | Scope |
-| --- | --- | --- |
-| `npm run build` | Passed | TypeScript and Vite production output in `dist/` |
-| `npm run test` | 18 tests passed | Canonical game rules, React host/tutorial flows, demo rooms and configuration errors |
-| `npm run test:e2e` | 6 tests passed | Chromium at 390×844 and 1440×1000; host, invitation, sample seats, reload, second-tab joining, duplicate names, host transfer, settings dialog and saved reduced motion |
-| `npm run test:db` | Passed | Both migrations applied to embedded PostgreSQL with pgcrypto; SQL security assertions passed |
-| `npm audit --omit=dev --audit-level=moderate` | No reported vulnerabilities | Production dependency advisory check at implementation time |
-| Screenshot review | Completed | Original mobile and desktop home layouts, no horizontal overflow in tested viewports |
+| Check                       | Result                                                  | Scope                                                                                                                  |
+| --------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `npm run build`             | Passed                                                  | TypeScript, Vite production output and split game/Supabase/motion bundles                                              |
+| `npm run test`              | 32 tests passed                                         | Rules, demo rooms, configuration, card privacy, late-response protection, readiness, errors, abandonment and narration |
+| `npm run test:e2e`          | 8 tests passed                                          | Chromium at 390×844 and 1440×1000: demo lobby flows and role/night controls through an intercepted UI fixture          |
+| `npm run test:db`           | Passed                                                  | All three actual migrations applied to embedded PostgreSQL; lobby and roles/night SQL suites passed                    |
+| Production dependency audit | No reported vulnerabilities in the foundation milestone | Dependencies unchanged in this milestone                                                                               |
+| Screenshot review           | Completed                                               | Mobile home, private card and night layouts; no overflow in tested browser flows                                       |
 
-Database assertions exercise member-only reads, idempotent rejoining, case-insensitive nickname uniqueness, stale-version rejection, role settings validation, capacity, host-only actions, removal, explicit host transfer, denied direct mutation, denied secret reads and revoked unauthenticated RPC access.
+Role SQL assertions exercise 5–10 players and all 16 optional-role subsets, correct role/faction counts, required characters, Merlin/Mordred/Oberon/Percival knowledge rules, outsider denial, duplicate confirmations, host-only starts/ceremony actions, early-start rejection, pause/resume, explicit advancement, no private Realtime publication, abandonment, retired-role denial, preserved history and fresh match IDs.
 
-The database harness uses PGlite, real PostgreSQL compiled to WASM, with a minimal `auth.users` table and a stub `auth.uid()` function. It applies the actual migrations without rewriting them. It does not provide Supabase Auth, PostgREST, a Realtime server, parallel database sessions or hosted platform defaults. Passing these assertions does not certify a production Supabase deployment.
+The database harness uses PGlite (PostgreSQL compiled to WASM), pgcrypto, a minimal `auth.users` table and stubbed `auth.uid()`. Actual migrations run without rewriting. It does not provide Supabase Auth, PostgREST, Realtime, parallel sessions or hosted defaults. The agent has not applied the new migration to the user's cloud project.
 
-Not verified: hosted anonymous authentication, actual cross-device Realtime, concurrent requests, real QR camera scanning, native mobile sharing, spoken audio on physical phones, iOS Safari/Android Chrome lifecycle behavior, real 360–430px devices, Cloudflare deployment, or any future gameplay functionality. The browser tests exercise the explicitly labeled local demo. No cloud credentials were available or added.
+The browser role/night test intercepts the service module with a UI fixture. It verifies rendered controls and responsive transitions, not production multiplayer or authority. No test fixtures are exposed as application routes. Tests disable cloud variables and use a separate port to avoid the user's Supabase data and development server.
 
-Build tools initially encountered Windows sandbox ancestor-directory access restrictions; the successful build/test runs used approved execution outside that restriction. This is an environment constraint, not an application runtime requirement.
+The user reports that their existing Supabase auth/lobby setup works. Hosted role/night RPCs, cross-device Realtime, true concurrency, physical camera/sharing, spoken audio on physical phones, iOS/Android lifecycle behavior and deployment remain unverified by the agent. No environment values were read, printed or changed. Quest gameplay and endgame are not implemented.
+
+Successful build/browser runs used approved execution outside Windows filesystem restrictions. This is an execution environment limitation, not a Crownfall runtime requirement.

@@ -4,9 +4,15 @@
 
 ## Current build
 
-The first milestone is implemented: original responsive home, host/join forms, invitation links, camera QR scanning, QR invitations, player roster, host settings/removal, explicit leave and host transfer, tutorial, local preferences and narration preview. Supabase integration includes anonymous session restoration, member-only lobby snapshots, Realtime room invalidation and refetch on reconnect/focus.
+The foundation, lobby, and roles/night milestones are implemented. With 5–10 real players, the host can start a match with securely assigned characters, private reveal cards, role-specific knowledge, ready confirmations, and a synchronized night ceremony with host narration, pause/resume, replay, voice, volume and speed controls. Refresh restores the current phase while keeping the character face down. Existing host/join, QR, tutorial and preference features remain available.
 
-**Gameplay is not implemented yet.** Start Game is visibly disabled. Secure role assignment, card reveal, readiness, ceremony, team/quest voting, assassination, scoreboard, rematches, automatic disconnected-host recovery and scheduled cleanup remain future work. The schema foundations for gameplay are included but deliberately inaccessible to clients until secure RPCs are implemented.
+**Quest gameplay is not implemented yet.** The ceremony ends at the first-team screen, which clearly marks this boundary. Team proposals/voting, quest submissions/results, assassination, victory screens, full rematches, automatic disconnected-host recovery and scheduled cleanup remain future work. The host can explicitly end an active match and return everyone to the lobby. A fresh start creates a new match and new assignments while preserving private history.
+
+## Upgrade an existing Supabase project
+
+If migrations `001` and `002` were already applied, open **SQL Editor → New query**, paste the entire contents of [`202610300003_roles_and_night.sql`](supabase/migrations/202610300003_roles_and_night.sql), and click **Run** once. Do not rerun the older files. Refresh Crownfall after the migration succeeds. No environment variable changes are needed.
+
+To test, join a room from five separate browser profiles/devices and let the host click **Start game**. Each player privately reveals their character and presses **Ready**. Once all are ready, the host selects **Start ceremony**, then **Enable narration** on the host’s phone only. Use **Next instruction** after everyone follows each caption; audio completion never advances automatically. **Complete ceremony** reaches the milestone boundary. Use **End this match and return to lobby** to reset safely.
 
 See [architecture, state machine and security model](docs/ARCHITECTURE.md) and [verification record](docs/VERIFICATION.md).
 
@@ -31,7 +37,7 @@ Without credentials, the app explicitly runs a **local demo**. Rooms persist in 
 1. Create a Supabase project on the Free plan. In Authentication → Providers, enable anonymous sign-ins. Configure abuse protection/CAPTCHA before public release; CAPTCHA token integration remains a release task.
 2. Run the SQL files in `supabase/migrations/` in filename order using the SQL editor, or `supabase link --project-ref YOUR_REF` then `supabase db push` with the Supabase CLI. Apply each migration once. Do not expose the `private` schema in Data API settings.
 3. The lobby migration enables RLS and publishes **only `public.rooms`** to `supabase_realtime`. Confirm Realtime is enabled for that table. Do not add roles, votes or submissions to the publication.
-4. Copy `.env.example` to `.env.local`. Set the project URL and the public **publishable** key:
+4. Create `.env` (or `.env.local`) in the root folder. Set the project URL and the public **publishable** key. Keep values in one file; `.env.local` overrides `.env`:
 
 ```dotenv
 VITE_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
@@ -51,7 +57,7 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Vitest covers canonical rules, local demo lifecycle, configuration errors and core React flows. Playwright covers mobile/desktop layout, host/join flows, invitation generation, refresh, host transfer and saved settings in demo mode. `npm run test:db` applies the real migrations and executes SQL security assertions in embedded PostgreSQL with stubbed authentication. These do **not** certify real multiplayer security. Run `supabase/tests/lobby_security.sql` against an isolated migrated Supabase database; it rolls back its fixture data. Hosted integration and true concurrent multi-session tests require a configured backend and remain release gates. Never run fixture tests in a production project.
+Vitest covers rules, demo rooms, configuration failures, card privacy, late responses, readiness, ceremony controls and speech behavior. Playwright covers lobby flows plus role/night screens using an intercepted UI fixture. It runs on port 5174 with cloud credentials disabled, without touching your project or dev server. `npm run test:db` applies all real migrations and executes SQL security assertions in embedded PostgreSQL with stubbed authentication; it exercises every player count and all 16 optional-role subsets. These do **not** certify hosted multiplayer security. Run SQL files in `supabase/tests/` only against an isolated migrated Supabase database; fixtures roll back. Real Supabase integration and concurrent multi-session testing remain release gates.
 
 ## Deploy to Cloudflare Pages
 
@@ -59,7 +65,7 @@ Vitest covers canonical rules, local demo lifecycle, configuration errors and co
 2. Create a Cloudflare Pages project connected to the repository. Select Vite, build command `npm run build`, output `dist`, Node 24.
 3. Set both `VITE_SUPABASE_*` variables in Pages build environment settings. They are embedded public configuration; no backend secrets belong there.
 4. Deploy. `public/_redirects` provides SPA fallback for direct invitation and room routes.
-5. Test the HTTPS deployment on at least two different phones. Check anonymous authentication, QR scan permission and denial, joining, roster synchronization, nickname conflicts, host settings, refresh/reconnection and explicit host transfer. The active-game Start button remains disabled in this milestone.
+5. Test the HTTPS deployment on multiple phones. Check joining, role privacy, ready synchronization, refresh/reconnection, host-only audio, night controls and return to lobby. Start requires five real identities; local sample seats cannot start a production match.
 
 No cloud project, repository remote, credentials or deployment was created by this local build. Supabase Free projects may pause after inactivity; service limits and browser speech/camera support must be evaluated before release.
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import { AnimatePresence, MotionConfig } from "framer-motion";
 import { Crown, BookOpen, Settings2 } from "lucide-react";
@@ -7,6 +7,7 @@ import Entry from "./pages/Entry";
 import Lobby from "./pages/Lobby";
 import Tutorial from "./pages/Tutorial";
 import Settings from "./components/Settings";
+const Game = lazy(() => import("./pages/Game"));
 import { identity, isDemo } from "./services/rooms";
 import { message } from "./utils/errors";
 function App() {
@@ -62,6 +63,20 @@ function App() {
         <Route path="/host" element={<Entry host />} />
         <Route path="/join/:code?" element={<Entry />} />
         <Route path="/room/:code" element={<Lobby />} />
+        <Route
+          path="/game/:code"
+          element={
+            <Suspense
+              fallback={
+                <main className="page narrow">
+                  <p role="status">Opening the council…</p>
+                </main>
+              }
+            >
+              <Game />
+            </Suspense>
+          }
+        />
         <Route path="/how-to-play" element={<Tutorial />} />
         <Route
           path="*"

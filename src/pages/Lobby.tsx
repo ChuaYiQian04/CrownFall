@@ -25,6 +25,7 @@ import {
 import { OPTIONAL_ROLES, validateRoles } from "../game/rules";
 import Button from "../components/Button";
 import { message } from "../utils/errors";
+import { startGame } from "../services/game";
 export default function Lobby() {
   const { code = "" } = useParams();
   const navigate = useNavigate();
@@ -34,6 +35,10 @@ export default function Lobby() {
   const [status, setStatus] = useState("Connecting");
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (room?.status === "PLAYING")
+      navigate(`/game/${code}`, { replace: true });
+  }, [room?.status, code, navigate]);
   useEffect(() => {
     let active = true;
     const refresh = () => {
@@ -77,6 +82,24 @@ export default function Lobby() {
       else setRoom(await getRoom(code));
     } catch (e) {
       setError(message(e));
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function start() {
+    if (!room || busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      await startGame(room.code, room.version);
+      navigate(`/game/${room.code}`, { replace: true });
+    } catch (e) {
+      setError(message(e));
+      try {
+        setRoom(await getRoom(code));
+      } catch {
+        /* Retain the start error. */
+      }
     } finally {
       setBusy(false);
     }
@@ -196,15 +219,21 @@ export default function Lobby() {
           <div className="lobby-bottom">
             <p>
               <Users size={16} />
-              {validation || "Your fellowship is ready for the next milestone."}
+              {validation || "Your fellowship is ready. Let the secrets begin."}
             </p>
-            <Button disabled>
+            <Button
+              disabled={!host || busy || !!validation || isDemo}
+              onClick={() => void start()}
+            >
               {" "}
-              <Swords size={17} /> Start game · coming next
+              <Swords size={17} /> {busy ? "Preparing…" : "Start game"}
             </Button>
             <small>
-              Role assignment and gameplay are not implemented in this
-              milestone.
+              {isDemo
+                ? "Connect Supabase to assign secret roles. Local demo seats cannot start a match."
+                : host
+                  ? "Roles are assigned privately on the server. Team and quest gameplay follows in the next milestone."
+                  : "The host will start once the fellowship is ready."}
             </small>
           </div>
         </section>

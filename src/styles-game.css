@@ -1,0 +1,336 @@
+.game-page {
+  max-width: 950px;
+}
+.night-panel > svg,
+.dawn-panel > svg {
+  margin-left: auto;
+  margin-right: auto;
+}
+.reveal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+.character-section {
+  text-align: center;
+}
+.character-card {
+  position: relative;
+  width: 100%;
+  min-height: 460px;
+  border: 1px solid #d6b56d77;
+  border-radius: 14px;
+  padding: 35px 27px;
+  background:
+    radial-gradient(ellipse at 50% 30%, #d6b56d0d, transparent 65%),
+    linear-gradient(140deg, #192a43, #0d1729);
+  color: #f2e8d5;
+  overflow: hidden;
+  box-shadow: 0 16px 50px #0003;
+}
+.character-card:before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid #d6b56d26;
+  pointer-events: none;
+  border-radius: 8px;
+}
+.card-back {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  cursor: pointer;
+  min-height: 470px;
+}
+.card-back > svg {
+  color: #d6b56d;
+  filter: drop-shadow(0 0 25px #d6b56d33);
+}
+.card-ornament {
+  font-size: 11px;
+  color: #d6b56d77;
+}
+.card-brand {
+  font-family: Cinzel, serif;
+  letter-spacing: 4px;
+  font-size: 21px;
+  color: #d6b56d;
+}
+.card-motto {
+  font-family: Cinzel, serif;
+  font-size: 12px;
+  color: #b3b6bd;
+}
+.card-reveal {
+  font-size: 12px;
+  color: #d6b56d;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.8;
+}
+.card-front {
+  animation: card-unveil 0.45s ease-out;
+  transform-origin: center;
+  min-height: 470px;
+}
+.faction-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #9abce5;
+}
+.evil-card .faction-label {
+  color: #efa4ad;
+}
+.character-emblem {
+  color: #d6b56d;
+  margin: 25px auto 15px;
+}
+.character-card h2 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.character-title {
+  font-family: Cinzel, serif;
+  font-size: 11px;
+  color: #d6b56d;
+  margin-bottom: 16px;
+}
+.character-card p {
+  font-size: 12px;
+  line-height: 1.85;
+}
+.private-knowledge {
+  padding: 20px 0 5px;
+  margin: 20px 0;
+  border-top: 1px solid #d6b56d22;
+}
+.private-knowledge h3 {
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #d6b56d;
+}
+.private-knowledge ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.private-knowledge li {
+  padding: 7px 13px;
+  background: #ffffff07;
+  border: 1px solid #ffffff14;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.character-card .button {
+  width: 100%;
+  position: relative;
+}
+.private-hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: #93a0b4;
+  font-size: 10px;
+  line-height: 1.8;
+  text-align: center;
+  margin: 20px 0;
+}
+.reveal-grid > div > .button {
+  width: 100%;
+  margin-top: 3px;
+}
+.ready-status {
+  margin-left: auto;
+  font-size: 10px;
+  color: #8794a7;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.ready-status.is-ready {
+  color: #a2c8b5;
+}
+.ready-confirmed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background: #89bca010;
+  border: 1px solid #89bca033;
+  border-radius: 5px;
+  color: #a2c8b5;
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: center;
+}
+.ready-panel > .button {
+  width: 100%;
+  margin-top: 25px;
+}
+.ready-panel > small {
+  display: block;
+  font-size: 10px;
+  color: #8794a7;
+  line-height: 1.9;
+  text-align: center;
+  margin-top: 15px;
+}
+.night-panel {
+  max-width: 650px;
+  margin: auto;
+  text-align: center;
+  padding: 35px;
+}
+.night-panel > .eyebrow {
+  justify-content: center;
+  margin: 20px 0 17px;
+  font-size: 9px;
+}
+.night-panel h1 {
+  font-size: 29px;
+}
+.night-caption {
+  font-size: 18px;
+  line-height: 1.9;
+  color: #e4dccb;
+  min-height: 150px;
+  padding: 10px 0;
+}
+.night-progress {
+  display: flex;
+  gap: 7px;
+  margin: 25px 0;
+}
+.night-progress > span {
+  height: 3px;
+  background: #ffffff13;
+  flex: 1;
+}
+.night-progress .complete {
+  background: #d6b56d;
+}
+.ceremony-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.ceremony-controls .button {
+  padding: 12px 10px;
+  font-size: 11px;
+}
+.night-panel > .button {
+  width: 100%;
+}
+.night-panel > .text-button {
+  margin: auto;
+}
+.narration-settings {
+  text-align: left;
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid #ffffff10;
+}
+.narration-settings summary {
+  cursor: pointer;
+  color: #d6b56d;
+  font-size: 12px;
+  min-height: 35px;
+}
+.narration-settings input {
+  width: 100%;
+  accent-color: #d6b56d;
+  min-height: 30px;
+}
+.abandon-controls {
+  margin: 35px auto 0;
+  max-width: 650px;
+}
+.abandon-controls > .text-button {
+  margin: auto;
+  font-size: 10px;
+}
+.abandon-controls .panel h2 {
+  font-size: 20px;
+}
+.dawn-panel {
+  max-width: 550px;
+  margin: auto;
+  text-align: center;
+}
+.dawn-panel > .eyebrow {
+  margin: 20px 0;
+  justify-content: center;
+}
+.dawn-panel h1 {
+  font-size: 27px;
+}
+.dawn-panel strong {
+  color: #f2e8d5;
+  font-weight: 500;
+}
+.game-page .error {
+  overflow-wrap: anywhere;
+}
+.game-page .notice {
+  font-size: 11px;
+}
+@keyframes card-unveil {
+  from {
+    opacity: 0.1;
+    transform: perspective(900px) rotateY(-70deg) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(900px) rotateY(0) scale(1);
+  }
+}
+@media (max-width: 650px) {
+  .reveal-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .game-page {
+    max-width: 500px;
+  }
+  .character-card {
+    min-height: 430px;
+  }
+  .night-panel {
+    padding: 28px 22px;
+  }
+  .night-panel h1 {
+    font-size: 25px;
+  }
+  .night-caption {
+    font-size: 16px;
+    min-height: 180px;
+  }
+  .ceremony-controls {
+    grid-template-columns: 1fr;
+  }
+  .ceremony-controls .button {
+    font-size: 12px;
+  }
+  .game-page .lobby-heading h1 {
+    font-size: 24px;
+  }
+}

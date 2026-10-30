@@ -20,6 +20,7 @@ try {
   for (const file of [
     "202610300001_lobby.sql",
     "202610300002_game_foundation.sql",
+    "202610300003_roles_and_night.sql",
   ]) {
     await db.exec(
       await readFile(
@@ -37,6 +38,15 @@ try {
   );
   console.log(
     "Passed lobby security assertions (embedded PostgreSQL, stubbed auth.uid).",
+  );
+  await db.exec(
+    await readFile(
+      new URL("../supabase/tests/roles_and_night.sql", import.meta.url),
+      "utf8",
+    ),
+  );
+  console.log(
+    "Passed role assignment, private knowledge and night-state assertions.",
   );
 } catch (error) {
   console.error(`Database check failed: ${error.message}`);
