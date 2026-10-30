@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import {
   Crown,
   Eye,
@@ -43,7 +43,9 @@ export default function CharacterCard({
     setLoading(false);
     setArtFailed(false);
   }
-  useEffect(() => {
+  // Reset request ownership before the newly rendered card can be clicked.
+  // A passive effect can otherwise invalidate an immediate reveal request.
+  useLayoutEffect(() => {
     hide();
     const away = () => {
       if (document.visibilityState !== "visible") hide();

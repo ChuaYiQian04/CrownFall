@@ -1,5 +1,13 @@
 # Verification — 30 October 2026
 
+## Role reveal initialization race
+
+The Pages deployment for commit `966a133` failed at `npm run test`; its CI annotation showed the role-reveal integration test still displaying a face-down card while waiting for the Merlin heading. The live bundle consequently remained at the preceding version.
+
+A deterministic regression reproduced the same face-down outcome by starting a reveal during card mounting: the passive initialization effect reset the request token after the request began, discarding its response. Card initialization and listener cleanup now use a layout effect, completing before the card becomes interactive. The original Game integration assertion remains unchanged, with no timeout increase, test skip or retry added. New regressions cover immediate revelation with and without Strict Mode, and ignoring a private response after a match switch. Existing blur/hide protections remain in place.
+
+Validation passed: all 59 unit/component tests with the Pages base/router and `CI=true`, six separate shuffled runs of the focused card/Game tests, the production build, and four mobile/desktop role-night/quest-board browser checks. The fix is local until committed and pushed; no database change is required.
+
 ## Illustrated quest board
 
 The final GitHub Pages production check also passed after the compact-label adjustment, including successful WebP responses for all five medallions and both map sizes under `/CrownFall/`.
