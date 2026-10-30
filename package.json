@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:pages": "playwright test --config playwright.pages.config.ts",
     "test:db": "node scripts/test-database.mjs",
     "format": "prettier --write src scripts tests *.json *.ts docs README.md"
   },

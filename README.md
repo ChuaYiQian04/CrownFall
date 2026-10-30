@@ -59,6 +59,25 @@ npm run test:e2e
 
 Vitest covers rules, demo rooms, configuration failures, card privacy, late responses, readiness, ceremony controls and speech behavior. Playwright covers lobby flows plus role/night screens using an intercepted UI fixture. It runs on port 5174 with cloud credentials disabled, without touching your project or dev server. `npm run test:db` applies all real migrations and executes SQL security assertions in embedded PostgreSQL with stubbed authentication; it exercises every player count and all 16 optional-role subsets. These do **not** certify hosted multiplayer security. Run SQL files in `supabase/tests/` only against an isolated migrated Supabase database; fixtures roll back. Real Supabase integration and concurrent multi-session testing remain release gates.
 
+## Deploy to GitHub Pages
+
+The repository includes `.github/workflows/deploy-pages.yml`. It builds Vite and publishes **`dist/`**, rather than serving source TypeScript. For the current project the public address is `https://chuayiqian04.github.io/CrownFall/`.
+
+1. On GitHub, open the repository's **Settings → Pages**. Set **Source** to **GitHub Actions**, replacing Deploy from a branch.
+2. Open **Settings → Secrets and variables → Actions → Variables**. Add two **repository variables**, using the same values as your local environment:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_PUBLISHABLE_KEY`
+3. Commit and push the deployment changes to `master` or `main`. The workflow also supports manual **Actions → Deploy Crownfall to GitHub Pages → Run workflow**.
+4. Wait for both build and deploy jobs to succeed, then open the URL printed by the deployment. Refresh with Ctrl+Shift+R if an old blank page is cached.
+
+GitHub cannot read your ignored local `.env`. The workflow fails with setup instructions if either repository variable is absent, instead of publishing a demo accidentally. Supply the public publishable key, never a secret/service-role key. No migration or Supabase project changes are needed for hosting.
+
+The workflow sets the asset base to the repository path and uses hash routes, e.g. `/CrownFall/#/join/ABCDEF`. This makes invitations and refreshes work on static GitHub Pages. QR parsing accepts both these and normal browser routes. Local development and Cloudflare retain normal routes by default. GitHub Free Pages requires a public repository.
+
+Run `npm run test:pages` to build with GitHub-style paths and verify the production output in Chromium using an isolated local demo. The preview test overrides cloud variables and never touches your Supabase data. This test does not publish the site.
+
+References: [Vite GitHub Pages setup](https://vite.dev/guide/static-deploy.html#github-pages), [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), [React Router hash routing](https://reactrouter.com/api/declarative-routers/HashRouter).
+
 ## Deploy to Cloudflare Pages
 
 1. Push this repository to GitHub.

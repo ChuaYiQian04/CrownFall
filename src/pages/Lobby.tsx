@@ -26,6 +26,7 @@ import { OPTIONAL_ROLES, validateRoles } from "../game/rules";
 import Button from "../components/Button";
 import { message } from "../utils/errors";
 import { startGame } from "../services/game";
+import { invitationUrl } from "../utils/invitations";
 export default function Lobby() {
   const { code = "" } = useParams();
   const navigate = useNavigate();
@@ -125,7 +126,7 @@ export default function Lobby() {
       </main>
     );
   const host = room.host_user_id === user;
-  const invite = `${location.origin}/join/${room.code}`;
+  const invite = invitationUrl(room.code);
   const validation = validateRoles(room.players.length, room.settings.roles);
   async function copy() {
     try {

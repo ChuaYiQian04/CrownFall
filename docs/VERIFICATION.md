@@ -1,5 +1,13 @@
 # Verification — 30 October 2026
 
+## GitHub Pages deployment correction
+
+The public URL returned the unbuilt source `index.html` referencing `/src/main.tsx`. This explains the blank page: GitHub Pages serves static files and does not run Vite's development compiler. The local correction adds an Actions build/deploy workflow, repository-relative asset paths, hash routing for Pages, and compatible invitation/QR parsing. Cloudflare/local routing remains unchanged by default.
+
+After this change, all **43 unit/component tests passed**, and **`npm run test:pages` passed** against a production build at `/CrownFall/`, including generated assets, navigation, room refresh and direct invitation refresh/join. The Pages test uses a local demo with cloud variables disabled. The workflow itself has not run on GitHub, and the live site will remain unchanged until these files are pushed and GitHub Pages is configured for Actions with the two public Supabase repository variables. Existing backend checks below were not rerun for this frontend hosting change.
+
+## Roles/night milestone checks
+
 | Check                       | Result                                                  | Scope                                                                                                                  |
 | --------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `npm run build`             | Passed                                                  | TypeScript, Vite production output and split game/Supabase/motion bundles                                              |

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { invitationCode } from "../utils/invitations";
 export default function Scanner({
   onCode,
 }: {
@@ -20,9 +21,7 @@ export default function Scanner({
           { fps: 10, qrbox: 220 },
           (text) => {
             try {
-              const value = new URL(text).pathname.match(
-                /^\/join\/([A-Z2-9]{6})$/i,
-              )?.[1];
+              const value = invitationCode(text);
               if (value) callback.current(value.toUpperCase());
               else setError("Scan a Crownfall invitation QR code.");
             } catch {

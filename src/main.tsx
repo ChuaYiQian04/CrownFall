@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
+import { usesHashRouting } from "./utils/invitations";
 import "@fontsource/cinzel/500.css";
 import "@fontsource/cinzel/600.css";
 import "@fontsource/inter/400.css";
@@ -19,10 +20,11 @@ try {
 } catch {
   /* Invalid stored preferences use browser defaults. */
 }
+const Router = usesHashRouting() ? HashRouter : BrowserRouter;
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router basename={usesHashRouting() ? undefined : import.meta.env.BASE_URL}>
       <App />
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
 );
