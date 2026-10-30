@@ -50,6 +50,11 @@
   color: #d6b56d;
   filter: drop-shadow(0 0 25px #d6b56d33);
 }
+.card-back .card-brand-emblem {
+  width: 132px;
+  height: 132px;
+  filter: drop-shadow(0 8px 20px #0008) drop-shadow(0 0 22px #d6b56d20);
+}
 .card-ornament {
   font-size: 11px;
   color: #d6b56d77;

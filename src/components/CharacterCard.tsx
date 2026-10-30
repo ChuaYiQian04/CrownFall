@@ -22,6 +22,7 @@ import {
 import { getMyRole } from "../services/game";
 import { message } from "../utils/errors";
 import Button from "./Button";
+import BrandEmblem from "./BrandEmblem";
 
 export default function CharacterCard({
   gameId,
@@ -98,7 +99,7 @@ export default function CharacterCard({
           aria-label="Reveal my character"
         >
           <span className="card-ornament">◆</span>
-          <Crown size={70} strokeWidth={1} />
+          <BrandEmblem className="card-brand-emblem" />
           <span className="card-brand">CROWNFALL</span>
           <span className="card-motto">An oath. A secret. A destiny.</span>
           <span className="card-reveal">

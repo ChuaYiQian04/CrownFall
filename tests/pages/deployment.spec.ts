@@ -13,6 +13,18 @@ test("built GitHub Pages site loads under the project path and preserves invite 
   const html = await response!.text();
   expect(html).toContain("/CrownFall/assets/");
   expect(html).not.toContain("/src/main.tsx");
+  const emblem = page.locator(".wordmark img");
+  await expect(emblem).toBeVisible();
+  await expect
+    .poll(() =>
+      emblem.evaluate(
+        (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
+  expect(await emblem.getAttribute("src")).toBe(
+    "/CrownFall/assets/branding/crownfall-emblem.webp",
+  );
   await Promise.all(
     Object.values(CHARACTER_ART).map(async (art) => {
       const asset = await page.request.get(

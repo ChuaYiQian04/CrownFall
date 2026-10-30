@@ -7,6 +7,7 @@ import Entry from "./pages/Entry";
 import Lobby from "./pages/Lobby";
 import Tutorial from "./pages/Tutorial";
 import Settings from "./components/Settings";
+import BrandEmblem from "./components/BrandEmblem";
 import { WorldBackground } from "./components/WorldArt";
 const Game = lazy(() => import("./pages/Game"));
 import { identity, isDemo } from "./services/rooms";
@@ -38,7 +39,7 @@ function App() {
       <WorldBackground />
       <header className="site-header">
         <Link to="/" className="wordmark">
-          <Crown size={25} />
+          <BrandEmblem />
           <span>CROWNFALL</span>
         </Link>
         <nav>

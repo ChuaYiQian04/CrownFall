@@ -110,6 +110,17 @@ svg {
   letter-spacing: 4px;
   color: var(--gold);
 }
+.brand-emblem {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px #0008);
+}
+.wordmark > span {
+  color: #e8ca88;
+  text-shadow: 0 2px 16px #d6b56d25;
+}
 nav {
   display: flex;
   align-items: center;
@@ -873,6 +884,10 @@ input::placeholder {
   }
   .wordmark svg {
     width: 22px;
+  }
+  .wordmark .brand-emblem {
+    width: 36px;
+    height: 36px;
   }
   nav {
     gap: 9px;

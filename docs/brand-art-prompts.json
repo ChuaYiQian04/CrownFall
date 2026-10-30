@@ -1,0 +1,9 @@
+{
+  "mode": "built-in imagegen",
+  "assets": [
+    {
+      "file": "public/assets/branding/crownfall-emblem.webp",
+      "prompt": "Create one premium illustrated emblem for CROWNFALL, an original medieval social deduction web game. Transparent background, square composition, isolated clean cutout. A majestic antique gold five-point royal crown with a luminous deep sapphire at its heart, subtle engraved filigree, richly sculpted bevels, a slender broken lower edge suggesting a fallen crown, small elegant symmetrical laurel flourishes embracing the base. Dark fantasy collectible board-game art, painterly realism with crisp silhouette, restrained detailed craftsmanship, luminous champagne gold highlights and midnight blue enamel, dramatic but readable at small header size. Crown fills 85 percent of canvas with clear margins. Strong simple overall silhouette; decoration supports the crown rather than overwhelming it. Front-facing, balanced and symmetrical. No lettering, no words, no frame, no scenery, no pedestal, no mockup, no background glow outside the object. Real alpha transparency."
+    }
+  ]
+}
