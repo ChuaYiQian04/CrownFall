@@ -72,6 +72,21 @@ test("play through proposals, ballots, quest results, assassination and victory"
       await expect(
         page.getByRole("heading", { name: "The fellowship prevails" }),
       ).toBeVisible();
+      if (quest === 1) {
+        await expect
+          .poll(() =>
+            page
+              .locator(".result-illustration img")
+              .evaluate(
+                (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+              ),
+          )
+          .toBe(true);
+        await page.screenshot({
+          path: testInfo.outputPath("quest-success.png"),
+          fullPage: true,
+        });
+      }
       await page.getByRole("button", { name: "Open the next quest" }).click();
     }
   }

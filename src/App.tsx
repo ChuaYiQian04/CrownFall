@@ -7,6 +7,7 @@ import Entry from "./pages/Entry";
 import Lobby from "./pages/Lobby";
 import Tutorial from "./pages/Tutorial";
 import Settings from "./components/Settings";
+import { WorldBackground } from "./components/WorldArt";
 const Game = lazy(() => import("./pages/Game"));
 import { identity, isDemo } from "./services/rooms";
 import { message } from "./utils/errors";
@@ -34,6 +35,7 @@ function App() {
   }, []);
   return (
     <MotionConfig reducedMotion="user">
+      <WorldBackground />
       <header className="site-header">
         <Link to="/" className="wordmark">
           <Crown size={25} />

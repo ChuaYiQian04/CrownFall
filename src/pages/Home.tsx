@@ -11,7 +11,7 @@ import {
   Sparkles,
   Swords,
 } from "lucide-react";
-import CrownScene from "../components/CrownScene";
+import { CrownRelic } from "../components/WorldArt";
 import { isDemo } from "../services/rooms";
 export default function Home() {
   return (
@@ -49,7 +49,7 @@ export default function Home() {
             betrayal.
           </p>
         </motion.div>
-        <CrownScene />
+        <CrownRelic />
       </div>
       <div className="game-facts">
         <span>

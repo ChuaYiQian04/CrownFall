@@ -10,6 +10,7 @@ import "@fontsource/inter/600.css";
 import "./styles.css";
 import "./styles-game.css";
 import "./styles-quests.css";
+import "./styles-world.css";
 import App from "./App";
 try {
   const preferences = JSON.parse(

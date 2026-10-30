@@ -1,0 +1,316 @@
+#root {
+  isolation: isolate;
+  min-height: 100svh;
+  position: relative;
+}
+.world-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: #0b1120;
+}
+.world-backdrop picture,
+.world-backdrop img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.world-backdrop img {
+  object-fit: cover;
+  object-position: 70% center;
+}
+.world-backdrop:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0b11204d, #0b112080 42%, #0b1120eb 100%);
+}
+.chamber-backdrop:after {
+  background: linear-gradient(180deg, #0b112066, #0b11208c 45%, #0b1120e6);
+}
+.chamber-backdrop img {
+  object-position: center;
+}
+.site-header {
+  background: linear-gradient(180deg, #0b112099, #0b112029);
+}
+.panel {
+  background: linear-gradient(145deg, #152136f5, #0f192bf5);
+  box-shadow: 0 12px 40px #0000001c;
+}
+.feature {
+  background: linear-gradient(120deg, #17243be8, #111b2ce8);
+}
+.art-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #233550, #0b1120);
+  color: #d6b56d;
+}
+.world-backdrop .art-fallback {
+  height: 100%;
+}
+.crown-relic {
+  width: 100%;
+  margin-left: 0;
+  max-width: 550px;
+}
+.crown-relic > img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  mask-image: radial-gradient(
+    ellipse closest-side at 50% 45%,
+    #000 58%,
+    transparent 100%
+  );
+}
+.crown-relic .artifact-label {
+  bottom: 2%;
+  color: #d5b673;
+}
+.button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 5px;
+  border-color: #e5c883;
+  background: linear-gradient(125deg, #e4c783, #d6b56d 42%, #bb944b);
+  box-shadow:
+    inset 0 1px 0 #fff3,
+    inset 0 -2px 0 #4e371a44,
+    0 4px 17px #0003;
+  text-shadow: 0 1px 0 #f8e5b133;
+  transition:
+    background 0.2s,
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.button:before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid #56401d38;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: -1;
+}
+.button:hover:not(:disabled) {
+  background: linear-gradient(125deg, #f0d79b, #e3c484 42%, #d1ac62);
+  box-shadow:
+    inset 0 1px 0 #fff5,
+    0 4px 24px #d6b56d20;
+}
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px #0003;
+}
+.button.secondary {
+  background: linear-gradient(140deg, #1c2b42ee, #101b2dee);
+  border-color: #a68b525e;
+  box-shadow: inset 0 1px 0 #ffffff0a;
+  text-shadow: none;
+}
+.button.secondary:before {
+  border-color: #d6b56d13;
+}
+.button.secondary:hover:not(:disabled) {
+  background: linear-gradient(140deg, #293b56, #16243a);
+}
+.illustrated-result.panel {
+  padding: 0;
+  overflow: hidden;
+  border-color: #d6b56d4d;
+}
+.result-illustration {
+  position: relative;
+  aspect-ratio: 1.8;
+  isolation: isolate;
+  background: #101a2c;
+}
+.result-illustration img,
+.victory-illustration img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+}
+.result-illustration:after,
+.victory-illustration:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 45%, #111c2c);
+}
+.result-copy {
+  position: relative;
+  padding: 0 30px 30px;
+  margin-top: -20px;
+}
+.result-copy > .button {
+  width: 100%;
+  margin-top: 17px;
+}
+.result-success h2 {
+  color: #e7d19f;
+}
+.result-failure h2 {
+  color: #e9a8af;
+}
+.result-failure.panel {
+  border-color: #a83d4a66;
+}
+.result-copy .eyebrow {
+  margin-bottom: 15px;
+}
+.illustrated-victory {
+  position: relative;
+  overflow: hidden;
+}
+.victory-illustration {
+  position: relative;
+  aspect-ratio: 2;
+  margin: -30px -30px 20px;
+}
+.illustrated-victory > svg {
+  position: relative;
+  margin-top: -62px;
+  filter: drop-shadow(0 3px 10px #000);
+  z-index: 1;
+}
+.history-verdict {
+  display: flow-root;
+}
+.history-illustration {
+  float: left;
+  width: 96px;
+  aspect-ratio: 1.3;
+  margin: 0 16px 10px 0;
+  overflow: hidden;
+  border: 1px solid #d6b56d26;
+  border-radius: 4px;
+}
+.history-illustration img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.history-verdict ul {
+  clear: both;
+}
+.illustrated-tutorial.panel {
+  padding: 0;
+  overflow: hidden;
+}
+.tutorial-illustration {
+  position: relative;
+  aspect-ratio: 1.6;
+  background: #101a2c;
+}
+.tutorial-illustration > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 36%;
+}
+.tutorial-art-1 > img {
+  object-position: center 42%;
+}
+.tutorial-illustration:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 65%, #111c2c);
+}
+.tutorial-chapter {
+  position: absolute;
+  right: 22px;
+  bottom: 6px;
+  z-index: 1;
+  font-family: Cinzel, serif;
+  font-size: 50px;
+  color: #d6b56d8c;
+  text-shadow: 0 2px 14px #000;
+}
+.tutorial-copy {
+  position: relative;
+  padding: 10px 30px 30px;
+}
+.tutorial-copy > .gold {
+  width: 24px;
+  height: 24px;
+  color: #d6b56d;
+}
+.tutorial .tutorial-copy .eyebrow {
+  margin: 18px 0 13px;
+}
+.tutorial .tutorial-copy p {
+  min-height: 145px;
+}
+.tutorial-copy .button {
+  font-size: 11px;
+  min-height: 48px;
+}
+.tutorial-copy .share-buttons {
+  gap: 8px;
+}
+@media (max-width: 600px) {
+  .world-backdrop img {
+    object-position: 75% center;
+  }
+  .world-backdrop:after {
+    background: linear-gradient(180deg, #0b11203d, #0b112099 50%, #0b1120f2);
+  }
+  .chamber-backdrop img {
+    object-position: 50% center;
+  }
+  .crown-relic {
+    width: 290px;
+    margin: -10px 0 -25px;
+  }
+  .crown-relic > img {
+    mask-image: radial-gradient(
+      ellipse closest-side at 50% 44%,
+      #000 58%,
+      transparent 100%
+    );
+  }
+  .result-illustration {
+    aspect-ratio: 1.45;
+  }
+  .result-copy {
+    padding: 0 23px 26px;
+    margin-top: -14px;
+  }
+  .result-copy h2 {
+    font-size: 24px;
+  }
+  .victory-illustration {
+    margin: -25px -22px 20px;
+    aspect-ratio: 1.6;
+  }
+  .tutorial-illustration {
+    aspect-ratio: 1.4;
+  }
+  .tutorial-copy {
+    padding: 8px 23px 26px;
+  }
+  .tutorial-chapter {
+    font-size: 40px;
+    right: 18px;
+  }
+  .history-illustration {
+    width: 78px;
+    margin-right: 12px;
+  }
+  .tutorial .tutorial-copy p {
+    min-height: 175px;
+  }
+}

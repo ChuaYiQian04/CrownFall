@@ -4,6 +4,8 @@
 
 ## Current build
 
+Original world artwork now extends across the experience: moonlit kingdom and council-chamber backgrounds, a painted crown centerpiece, separate success/failure quest cards, illustrated victory/history panels, and a six-chapter illustrated tutorial. Buttons retain real text with a CSS gold/steel treatment for readable labels and clear interaction states. All scenery is bundled in `public/assets/world/`; phones receive smaller 31–51 KiB background variants. The full generation prompt set is in [world-art-prompts.json](docs/world-art-prompts.json). This is a frontend visual update; no SQL or environment changes are required.
+
 The reveal cards include eight original AI-generated fantasy portraits, bundled locally in `public/assets/characters/` as 720×1080 WebP files (about 88–167 KiB each). They load only when the owner reveals a character. Text/knowledge remains accessible independently of the artwork, and an emblem fallback appears if an image cannot load. No SQL changes are needed for artwork updates. The full prompt set is recorded in [character-art-prompts.json](docs/character-art-prompts.json); images were created with the built-in imagegen tool and are not copied Avalon artwork.
 
 The foundation, lobby, and roles/night milestones are implemented. With 5–10 real players, the host can start a match with securely assigned characters, private reveal cards, role-specific knowledge, ready confirmations, and a synchronized night ceremony with host narration, pause/resume, replay, voice, volume and speed controls. Refresh restores the current phase while keeping the character face down. Existing host/join, QR, tutorial and preference features remain available.

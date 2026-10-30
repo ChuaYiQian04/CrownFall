@@ -14,6 +14,7 @@ import type { PrivateCharacter } from "../game/characters";
 import { message } from "../utils/errors";
 import Button from "./Button";
 import CharacterCard from "./CharacterCard";
+import { WorldImage } from "./WorldArt";
 type Props = {
   game: GameSnapshot;
   user: string;
@@ -306,25 +307,45 @@ export default function QuestGame({ game, user, busy, act }: Props) {
         </section>
       ) : null}
       {game.phase === "QUEST_RESULT" ? (
-        <section className="panel quest-panel result-panel">
-          <div className="eyebrow">QUEST {game.quest_number} · THE VERDICT</div>
-          <h2>
-            {results.at(-1)?.result === "SUCCESS"
-              ? "The fellowship prevails"
-              : "Betrayal on the road"}
-          </h2>
-          <p>
-            {results.at(-1)?.fail_count} Fail submission(s).{" "}
-            {game.fail_threshold} required to fail.
-          </p>
-          {host ? (
-            <Button disabled={busy} onClick={() => void act("continue_quest")}>
-              Open the next quest
-              <ChevronRight size={17} />
-            </Button>
-          ) : (
-            <p>Waiting for the host to open the next quest.</p>
-          )}
+        <section
+          className={`panel quest-panel result-panel illustrated-result ${results.at(-1)?.result === "SUCCESS" ? "result-success" : "result-failure"}`}
+        >
+          <div className="result-illustration">
+            <WorldImage
+              name={
+                results.at(-1)?.result === "SUCCESS"
+                  ? "quest-success"
+                  : "quest-failure"
+              }
+              decorative
+              eager
+            />
+          </div>
+          <div className="result-copy">
+            <div className="eyebrow">
+              QUEST {game.quest_number} · THE VERDICT
+            </div>
+            <h2>
+              {results.at(-1)?.result === "SUCCESS"
+                ? "The fellowship prevails"
+                : "Betrayal on the road"}
+            </h2>
+            <p>
+              {results.at(-1)?.fail_count} Fail submission(s).{" "}
+              {game.fail_threshold} required to fail.
+            </p>
+            {host ? (
+              <Button
+                disabled={busy}
+                onClick={() => void act("continue_quest")}
+              >
+                Open the next quest
+                <ChevronRight size={17} />
+              </Button>
+            ) : (
+              <p>Waiting for the host to open the next quest.</p>
+            )}
+          </div>
         </section>
       ) : null}
       {game.phase === "ASSASSINATION" ? (
@@ -405,8 +426,15 @@ export default function QuestGame({ game, user, busy, act }: Props) {
       ) : null}
       {game.phase === "GAME_OVER" ? (
         <section
-          className={`panel quest-panel victory-panel ${game.winner === "EVIL" ? "evil-victory" : "good-victory"}`}
+          className={`panel quest-panel victory-panel illustrated-victory ${game.winner === "EVIL" ? "evil-victory" : "good-victory"}`}
         >
+          <div className="victory-illustration">
+            <WorldImage
+              name={game.winner === "GOOD" ? "quest-success" : "quest-failure"}
+              decorative
+              eager
+            />
+          </div>
           <Crown size={52} />
           <div className="eyebrow">
             {game.winner === "GOOD" ? "THE LOYAL PREVAIL" : "EVIL PREVAILS"}
@@ -447,7 +475,22 @@ export default function QuestGame({ game, user, busy, act }: Props) {
         <details className="panel public-history">
           <summary>Public council history</summary>
           {game.proposals.map((p) => (
-            <article key={p.id}>
+            <article
+              key={p.id}
+              className={p.status !== "PENDING" ? "history-verdict" : ""}
+            >
+              {p.status !== "PENDING" && (
+                <div className="history-illustration">
+                  <WorldImage
+                    name={
+                      p.status === "APPROVED"
+                        ? "quest-success"
+                        : "quest-failure"
+                    }
+                    decorative
+                  />
+                </div>
+              )}
               <h3>
                 Quest {p.quest_number} · Proposal {p.attempt_number} ·{" "}
                 {p.status.toLowerCase()}

@@ -1,5 +1,13 @@
 # Verification — 30 October 2026
 
+## World, result and tutorial artwork
+
+The final GitHub Pages production test also passed, verifying all six new images and both mobile variants return WebP files under `/CrownFall/`.
+
+Six new original illustrations were generated using built-in imagegen and saved under `public/assets/world/`, together with two smaller background variants. Exact prompts are recorded in `docs/world-art-prompts.json`. The kingdom/chamber backgrounds switch by public route, not a player's hidden role. Quest/result illustrations are selected from already-public outcomes; they do not reveal individual submissions or affiliations. Buttons use CSS metal finishes and retain real labels, focus and disabled states. Existing portrait artwork remains intact.
+
+The production build and all 56 unit/component tests passed. All 14 mobile/desktop browser checks passed, including the six tutorial chapters, loaded success/failure illustrations, readable live totals and no horizontal overflow at tested widths. Screenshots of the home, tutorial and failed-quest card were visually reviewed. No backend or environment change was made, and the agent has not published this update.
+
 ## Character portrait update
 
 Eight original portraits were generated with built-in imagegen, inspected, and saved as 720×1080 WebP assets in `public/assets/characters/`. Sizes are 88–167 KiB per file; the exact prompts are in `docs/character-art-prompts.json`. No third-party image URL or paid runtime service is used. Source generation files remain preserved at their original tool locations; the website uses only the bundled optimized assets.

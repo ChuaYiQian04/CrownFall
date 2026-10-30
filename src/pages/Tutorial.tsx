@@ -2,6 +2,16 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, BookOpen, ChevronRight, Crown } from "lucide-react";
 import Button from "../components/Button";
+import { WorldImage } from "../components/WorldArt";
+import type { WorldArtName } from "../game/world-art";
+const lessonArt: WorldArtName[] = [
+  "tutorial-council",
+  "crown-relic",
+  "council-background",
+  "tutorial-council",
+  "quest-success",
+  "quest-failure",
+];
 const lessons = [
   [
     "A divided kingdom",
@@ -35,41 +45,49 @@ export default function Tutorial() {
       <Link to="/" className="back-link">
         <ArrowLeft size={16} /> Back home
       </Link>
-      <div className="panel tutorial">
-        <BookOpen className="gold" size={30} />
-        <div className="eyebrow">
-          HOW TO PLAY · {step + 1} / {lessons.length}
+      <div className="panel tutorial illustrated-tutorial">
+        <div className={`tutorial-illustration tutorial-art-${step}`}>
+          <WorldImage key={step} name={lessonArt[step]} eager />
+          <span className="tutorial-chapter" aria-hidden="true">
+            {String(step + 1).padStart(2, "0")}
+          </span>
         </div>
-        <h1>{lessons[step][0]}</h1>
-        <p>{lessons[step][1]}</p>
-        <div className="tutorial-progress">
-          {lessons.map((l, i) => (
-            <button
-              aria-label={`Lesson ${i + 1}: ${l[0]}`}
-              aria-current={i === step ? "step" : undefined}
-              key={l[0]}
-              onClick={() => setStep(i)}
-              className={i === step ? "active" : ""}
-            />
-          ))}
-        </div>
-        <div className="share-buttons">
-          <Button
-            secondary
-            disabled={step === 0}
-            onClick={() => setStep(step - 1)}
-          >
-            <ArrowLeft size={16} /> Previous
-          </Button>
-          {step < lessons.length - 1 ? (
-            <Button onClick={() => setStep(step + 1)}>
-              Next <ChevronRight size={16} />
+        <div className="tutorial-copy">
+          <BookOpen className="gold" size={30} />
+          <div className="eyebrow">
+            HOW TO PLAY · {step + 1} / {lessons.length}
+          </div>
+          <h1>{lessons[step][0]}</h1>
+          <p>{lessons[step][1]}</p>
+          <div className="tutorial-progress">
+            {lessons.map((l, i) => (
+              <button
+                aria-label={`Lesson ${i + 1}: ${l[0]}`}
+                aria-current={i === step ? "step" : undefined}
+                key={l[0]}
+                onClick={() => setStep(i)}
+                className={i === step ? "active" : ""}
+              />
+            ))}
+          </div>
+          <div className="share-buttons">
+            <Button
+              secondary
+              disabled={step === 0}
+              onClick={() => setStep(step - 1)}
+            >
+              <ArrowLeft size={16} /> Previous
             </Button>
-          ) : (
-            <Link to="/host" className="button">
-              Gather your friends <Crown size={16} />
-            </Link>
-          )}
+            {step < lessons.length - 1 ? (
+              <Button onClick={() => setStep(step + 1)}>
+                Next <ChevronRight size={16} />
+              </Button>
+            ) : (
+              <Link to="/host" className="button">
+                Gather your friends <Crown size={16} />
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </main>
