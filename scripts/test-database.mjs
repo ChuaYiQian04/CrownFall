@@ -21,6 +21,7 @@ try {
     "202610300001_lobby.sql",
     "202610300002_game_foundation.sql",
     "202610300003_roles_and_night.sql",
+    "202610300004_quest_gameplay.sql",
   ]) {
     await db.exec(
       await readFile(
@@ -47,6 +48,15 @@ try {
   );
   console.log(
     "Passed role assignment, private knowledge and night-state assertions.",
+  );
+  await db.exec(
+    await readFile(
+      new URL("../supabase/tests/quest_gameplay.sql", import.meta.url),
+      "utf8",
+    ),
+  );
+  console.log(
+    "Passed full-match quests, voting privacy, victory, rematch and authorization assertions.",
   );
 } catch (error) {
   console.error(`Database check failed: ${error.message}`);

@@ -82,7 +82,7 @@ export default function CharacterCard({
     : Crown;
   return (
     <section className="character-section" aria-label="Your private character">
-      {!character ? (
+      {!character || !allowReveal ? (
         <button
           className="character-card card-back"
           onClick={() => void reveal()}

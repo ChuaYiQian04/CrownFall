@@ -72,14 +72,14 @@ export function useGame(code: string) {
       document.removeEventListener("visibilitychange", wake);
     };
   }, [code, refresh]);
-  async function act(action: GameAction) {
+  async function act(action: GameAction, payload: unknown = {}) {
     if (!game || acting.current) return false;
     acting.current = true;
     setBusy(true);
     setActionError("");
     let ok = false;
     try {
-      await gameAction(game, action);
+      await gameAction(game, action, payload);
       ok = true;
     } catch (e) {
       if (alive.current) setActionError(message(e));

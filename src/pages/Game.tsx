@@ -5,7 +5,7 @@ import { useGame } from "../hooks/useGame";
 import CharacterCard from "../components/CharacterCard";
 import NightCeremony from "../components/NightCeremony";
 import Button from "../components/Button";
-import { TEAM_SIZES } from "../game/rules";
+import QuestGame from "../components/QuestGame";
 import { isDemo } from "../services/rooms";
 
 export default function Game() {
@@ -59,7 +59,9 @@ export default function Game() {
               ? "Your oath awaits"
               : game.phase === "NIGHT_PHASE"
                 ? "A realm of secrets"
-                : "The first council"}
+                : game.phase === "GAME_OVER"
+                  ? "The fate of the crown"
+                  : `Quest ${game.quest_number || 1} · The council`}
           </h1>
         </div>
         <span className="connection">
@@ -156,28 +158,15 @@ export default function Game() {
           act={act}
         />
       ) : (
-        <section className="panel dawn-panel">
-          <Crown size={45} className="gold" />
-          <div className="eyebrow">DAWN BREAKS</div>
-          <h1>The fellowship is ready</h1>
-          <p>
-            <strong>
-              {
-                game.players.find((p) => p.id === game.leader_player_id)
-                  ?.nickname
-              }
-            </strong>{" "}
-            leads the first quest. The first team requires{" "}
-            <strong>{TEAM_SIZES[game.players.length]?.[0]}</strong> players.
-          </p>
-          <div className="notice">
-            You have reached the end of this milestone. Team selection, approval
-            voting and quests arrive in the next development phase.
-          </div>
-          <CharacterCard gameId={game.id} />
-        </section>
+        <QuestGame
+          key={`${game.id}:${game.quest_number}:${game.proposal_attempt}:${game.phase}`}
+          game={game}
+          user={user}
+          busy={busy}
+          act={act}
+        />
       )}
-      {isHost && (
+      {isHost && game.phase !== "GAME_OVER" && (
         <section className="abandon-controls">
           {confirmAbandon ? (
             <div className="panel">

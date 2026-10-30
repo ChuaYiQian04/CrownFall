@@ -233,7 +233,7 @@ export default function Lobby() {
               {isDemo
                 ? "Connect Supabase to assign secret roles. Local demo seats cannot start a match."
                 : host
-                  ? "Roles are assigned privately on the server. Team and quest gameplay follows in the next milestone."
+                  ? "Roles are assigned privately on the server. Gather your council and begin."
                   : "The host will start once the fellowship is ready."}
             </small>
           </div>

@@ -13,7 +13,7 @@ test("private reveal, readiness and host ceremony across responsive layouts", as
     let state;
     export async function getGame(){
       if(!state){const user=await identity();state={id:'fixture-match',phase:'ROLE_REVEAL',version:0,host_user_id:user,leader_player_id:'p0',night_step:0,night_paused:false,roles:[],night_script:[{title:'The realm grows quiet',text:'Everyone, hide your character card and close your eyes.'},{title:'Dawn at the council',text:'Everyone, open your eyes.'}],players:Array.from({length:5},(_,i)=>({id:'p'+i,user_id:i===0?user:'fixture-user-'+i,nickname:i===0?'Arden':'Knight '+i,ready:i!==0}))};}
-      return structuredClone(state);
+      return structuredClone({...state,quest_number:1,proposal_attempt:1,required_team_size:2,fail_threshold:1,quest_results:[],proposals:[]});
     }
     export async function getMyRole(){return {role:'Merlin',faction:'GOOD',known_players:[{id:'p2',nickname:'Knight 2'},{id:'p4',nickname:'Knight 4'}]};}
     export async function gameAction(game,action){
@@ -72,7 +72,7 @@ test("private reveal, readiness and host ceremony across responsive layouts", as
   ).toBeVisible();
   await page.getByRole("button", { name: "Complete ceremony" }).click();
   await expect(
-    page.getByRole("heading", { name: "The fellowship is ready" }),
+    page.getByRole("heading", { name: "Who will you trust?" }),
   ).toBeVisible();
   expect(
     await page.evaluate(
