@@ -1,5 +1,13 @@
 # Verification — 30 October 2026
 
+## Illustrated quest board
+
+The final GitHub Pages production check also passed after the compact-label adjustment, including successful WebP responses for all five medallions and both map sizes under `/CrownFall/`.
+
+Built-in imagegen produced five square quest destinations and a navy/gold map surface. Optimized WebP files are bundled in `public/assets/quests/` (20–27 KiB per medallion, 179 KiB desktop map and 44 KiB mobile map), with the full prompt set in `docs/quest-board-art-prompts.json`. The board preserves all public quest totals and metadata, with text/icon/color cues for successful, failed, current and pending quests. Destination names are cosmetic; no game rule or private information flow changed. Portraits and existing scene assets were preserved.
+
+The production build, 56 unit/component tests and all 16 browser checks passed. A targeted fixture reproduces a failed first quest/current second quest and checks five loaded medallions, public metadata and no overflow at 360px and desktop widths. Screenshots were visually reviewed; phone labels were shortened after review to avoid crowding. The agent has not committed or deployed this update; no SQL or environment changes were made.
+
 ## World, result and tutorial artwork
 
 The final GitHub Pages production test also passed, verifying all six new images and both mobile variants return WebP files under `/CrownFall/`.

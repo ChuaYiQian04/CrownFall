@@ -11,6 +11,7 @@ import "./styles.css";
 import "./styles-game.css";
 import "./styles-quests.css";
 import "./styles-world.css";
+import "./styles-quest-board.css";
 import App from "./App";
 try {
   const preferences = JSON.parse(

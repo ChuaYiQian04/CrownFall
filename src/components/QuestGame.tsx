@@ -15,6 +15,7 @@ import { message } from "../utils/errors";
 import Button from "./Button";
 import CharacterCard from "./CharacterCard";
 import { WorldImage } from "./WorldArt";
+import QuestBoard from "./QuestBoard";
 type Props = {
   game: GameSnapshot;
   user: string;
@@ -78,61 +79,7 @@ export default function QuestGame({ game, user, busy, act }: Props) {
     );
   return (
     <>
-      <section className="panel scoreboard" aria-label="Quest scoreboard">
-        <div className="score-heading">
-          <span>
-            <Shield size={17} />
-            {results.filter((r) => r.result === "SUCCESS").length} loyal
-            victories
-          </span>
-          <span>
-            <Swords size={17} />
-            {results.filter((r) => r.result === "FAIL").length} betrayals
-          </span>
-        </div>
-        <ol className="quest-track">
-          {[1, 2, 3, 4, 5].map((q) => {
-            const result = results.find((r) => r.quest_number === q);
-            return (
-              <li
-                key={q}
-                className={`${result?.result?.toLowerCase() || "pending"} ${game.quest_number === q ? "current" : ""}`}
-              >
-                <span>
-                  {result ? (
-                    result.result === "SUCCESS" ? (
-                      <Shield size={20} />
-                    ) : (
-                      <Swords size={20} />
-                    )
-                  ) : (
-                    q
-                  )}
-                </span>
-                <small>Quest {q}</small>
-                {result && (
-                  <small>
-                    {result.result === "SUCCESS" ? "Success" : "Failed"}
-                  </small>
-                )}
-              </li>
-            );
-          })}
-        </ol>
-        {game.phase !== "GAME_OVER" && (
-          <div className="quest-meta">
-            <span>
-              Leader: <strong>{name(game.leader_player_id)}</strong>
-            </span>
-            <span>
-              Team: <strong>{game.required_team_size}</strong>
-            </span>
-            <span>
-              Proposal: <strong>{game.proposal_attempt} / 5</strong>
-            </span>
-          </div>
-        )}
-      </section>
+      <QuestBoard game={game} />
       {game.phase === "TEAM_PROPOSAL" ? (
         <section className="panel quest-panel">
           <div className="eyebrow">

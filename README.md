@@ -4,6 +4,8 @@
 
 ## Current build
 
+The quest scoreboard is an illustrated map board with five original painted destination medallions, gold current-quest markers, blue victory seals and crimson failure seals. Themed destination names are decorative; player counts, team sizes and rules are unchanged. Artwork is in `public/assets/quests/` with [generation prompts](docs/quest-board-art-prompts.json). Compact phone labels and a smaller mobile map preserve readability and loading speed. This update needs no migration.
+
 Original world artwork now extends across the experience: moonlit kingdom and council-chamber backgrounds, a painted crown centerpiece, separate success/failure quest cards, illustrated victory/history panels, and a six-chapter illustrated tutorial. Buttons retain real text with a CSS gold/steel treatment for readable labels and clear interaction states. All scenery is bundled in `public/assets/world/`; phones receive smaller 31–51 KiB background variants. The full generation prompt set is in [world-art-prompts.json](docs/world-art-prompts.json). This is a frontend visual update; no SQL or environment changes are required.
 
 The reveal cards include eight original AI-generated fantasy portraits, bundled locally in `public/assets/characters/` as 720×1080 WebP files (about 88–167 KiB each). They load only when the owner reveals a character. Text/knowledge remains accessible independently of the artwork, and an emblem fallback appears if an image cannot load. No SQL changes are needed for artwork updates. The full prompt set is recorded in [character-art-prompts.json](docs/character-art-prompts.json); images were created with the built-in imagegen tool and are not copied Avalon artwork.

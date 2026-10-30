@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { CHARACTER_ART } from "../../src/game/characters";
 import { WORLD_ART } from "../../src/game/world-art";
+import { QUEST_DESTINATIONS } from "../../src/game/quest-art";
 test("built GitHub Pages site loads under the project path and preserves invite routes on refresh", async ({
   page,
   context,
@@ -22,6 +23,17 @@ test("built GitHub Pages site loads under the project path and preserves invite 
     }),
   );
   await expect(page.getByRole("link", { name: "Host a game" })).toBeVisible();
+  await Promise.all(
+    [
+      ...QUEST_DESTINATIONS.map((q) => q.file),
+      "quest-map.webp",
+      "quest-map-mobile.webp",
+    ].map(async (file) => {
+      const asset = await page.request.get(`/CrownFall/assets/quests/${file}`);
+      expect(asset.status()).toBe(200);
+      expect(asset.headers()["content-type"]).toContain("image/webp");
+    }),
+  );
   await Promise.all(
     [
       ...Object.values(WORLD_ART).map((art) => art.file),
