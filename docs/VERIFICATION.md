@@ -1,5 +1,11 @@
 # Verification — 30 October 2026
 
+## Character portrait update
+
+Eight original portraits were generated with built-in imagegen, inspected, and saved as 720×1080 WebP assets in `public/assets/characters/`. Sizes are 88–167 KiB per file; the exact prompts are in `docs/character-art-prompts.json`. No third-party image URL or paid runtime service is used. Source generation files remain preserved at their original tool locations; the website uses only the bundled optimized assets.
+
+The reveal layout retains selectable text, private knowledge, hide-on-blur behavior and a fallback emblem if a portrait cannot load. Portrait elements appear only after the user reveals their own character. The mobile screenshot was visually reviewed. Build, 56 unit/component tests, 10 browser tests and the GitHub Pages production test passed after the update. The Pages check confirms all eight image URLs return `image/webp` under `/CrownFall/`. No backend migration or database change was made for this update; it has not been deployed by the agent.
+
 ## Core gameplay milestone
 
 The final GitHub Pages production check (`npm run test:pages`) also passed after this milestone, including TypeScript/build and project-path invitation refresh. The mobile team-row layout correction was verified in a fresh browser screenshot.

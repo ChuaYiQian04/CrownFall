@@ -4,6 +4,8 @@
 
 ## Current build
 
+The reveal cards include eight original AI-generated fantasy portraits, bundled locally in `public/assets/characters/` as 720×1080 WebP files (about 88–167 KiB each). They load only when the owner reveals a character. Text/knowledge remains accessible independently of the artwork, and an emblem fallback appears if an image cannot load. No SQL changes are needed for artwork updates. The full prompt set is recorded in [character-art-prompts.json](docs/character-art-prompts.json); images were created with the built-in imagegen tool and are not copied Avalon artwork.
+
 The foundation, lobby, and roles/night milestones are implemented. With 5–10 real players, the host can start a match with securely assigned characters, private reveal cards, role-specific knowledge, ready confirmations, and a synchronized night ceremony with host narration, pause/resume, replay, voice, volume and speed controls. Refresh restores the current phase while keeping the character face down. Existing host/join, QR, tutorial and preference features remain available.
 
 **The core match loop is implemented:** leader rotation, team selection, strict-majority approval voting, secret quest choices, aggregate results, the scoreboard, five-rejection and three-failure losses, assassination after three successes, victory/role reveal, and return to the same lobby for a fresh match. Optional-role knowledge and all 5–10 player quest rules are enforced by database functions. Automatic disconnected-host recovery, room cleanup, physical-device lifecycle testing and live concurrency verification remain release tasks.

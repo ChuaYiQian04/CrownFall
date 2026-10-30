@@ -38,11 +38,13 @@ test("private reveal, readiness and host ceremony across responsive layouts", as
   await expect(
     page.getByRole("heading", { name: "Merlin", exact: true }),
   ).not.toBeVisible();
+  await expect(page.locator('.character-portrait')).toHaveCount(0);
   await page.getByRole("button", { name: "Reveal my character" }).click();
   await expect(
     page.getByRole("heading", { name: "Merlin", exact: true }),
   ).toBeVisible();
   await expect(page.locator(".card-front")).toHaveCSS("opacity", "1");
+  await expect.poll(()=>page.locator('.character-portrait').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
   await page.screenshot({
     path: testInfo.outputPath("character.png"),
     fullPage: true,

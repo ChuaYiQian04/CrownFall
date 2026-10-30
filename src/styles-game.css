@@ -77,6 +77,103 @@
   animation: card-unveil 0.45s ease-out;
   transform-origin: center;
   min-height: 470px;
+  padding: 0;
+  background: #101c2e;
+}
+.character-card.card-front:before {
+  z-index: 3;
+  border-color: #d6b56d3d;
+}
+.character-artwork {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 1/1.08;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #364665, #0b1120);
+}
+.character-artwork:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #0b112026 0%,
+    transparent 40%,
+    #101c2e22 64%,
+    #101c2e 100%
+  );
+  pointer-events: none;
+}
+.character-portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  display: block;
+}
+.character-artwork .faction-label {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 2;
+  font-size: 8px;
+  letter-spacing: 1.1px;
+  padding: 9px 10px;
+  border: 1px solid #d6b56d35;
+  border-radius: 3px;
+  background: #0b1120c7;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 3px 12px #0003;
+}
+.artwork-seal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d6b56d77;
+  background: #0b1120bd;
+  border-radius: 50%;
+  color: #d6b56d;
+}
+.character-identity {
+  position: relative;
+  z-index: 2;
+  padding: 0 22px;
+  margin-top: -52px;
+  text-shadow: 0 2px 12px #0009;
+}
+.character-identity h2 {
+  font-size: 34px;
+  line-height: 1.2;
+  color: #f2e8d5;
+  margin-bottom: 9px;
+}
+.character-identity .character-title {
+  letter-spacing: 0.6px;
+  margin-bottom: 18px;
+}
+.character-copy {
+  position: relative;
+  padding: 0 27px 30px;
+}
+.character-copy > p {
+  color: #b8c1d0;
+}
+.character-copy .private-knowledge {
+  margin: 20px 0 22px;
+  padding: 20px 0 0;
+}
+.portrait-fallback {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d6b56d;
 }
 .faction-label {
   display: flex;
@@ -313,6 +410,15 @@
   }
   .character-card {
     min-height: 430px;
+  }
+  .character-artwork {
+    aspect-ratio: 1/1.1;
+  }
+  .character-identity h2 {
+    font-size: 31px;
+  }
+  .character-copy {
+    padding: 0 23px 28px;
   }
   .night-panel {
     padding: 28px 22px;

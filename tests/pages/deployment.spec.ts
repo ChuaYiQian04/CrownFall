@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import {CHARACTER_ART} from '../../src/game/characters';
 test("built GitHub Pages site loads under the project path and preserves invite routes on refresh", async ({
   page,
   context,
@@ -10,6 +11,10 @@ test("built GitHub Pages site loads under the project path and preserves invite 
   const html = await response!.text();
   expect(html).toContain("/CrownFall/assets/");
   expect(html).not.toContain("/src/main.tsx");
+  await Promise.all(Object.values(CHARACTER_ART).map(async art=>{
+    const asset=await page.request.get(`/CrownFall/assets/characters/${art.file}`);
+    expect(asset.status()).toBe(200);expect(asset.headers()['content-type']).toContain('image/webp');
+  }));
   await expect(page.getByRole("link", { name: "Host a game" })).toBeVisible();
   await page.getByRole("link", { name: "Host a game" }).click();
   await expect(page).toHaveURL(/\/CrownFall\/#\/host$/);

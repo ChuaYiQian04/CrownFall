@@ -14,7 +14,11 @@ import {
   TreePine,
   Flame,
 } from "lucide-react";
-import { CHARACTERS, type PrivateCharacter } from "../game/characters";
+import {
+  CHARACTERS,
+  CHARACTER_ART,
+  type PrivateCharacter,
+} from "../game/characters";
 import { getMyRole } from "../services/game";
 import { message } from "../utils/errors";
 import Button from "./Button";
@@ -30,12 +34,14 @@ export default function CharacterCard({
 }) {
   const [character, setCharacter] = useState<PrivateCharacter | null>(null),
     [loading, setLoading] = useState(false),
-    [error, setError] = useState("");
+    [error, setError] = useState(""),
+    [artFailed, setArtFailed] = useState(false);
   const serial = useRef(0);
   function hide() {
     serial.current++;
     setCharacter(null);
     setLoading(false);
+    setArtFailed(false);
   }
   useEffect(() => {
     hide();
@@ -111,39 +117,62 @@ export default function CharacterCard({
         <div
           className={`character-card card-front ${character.faction === "EVIL" ? "evil-card" : "good-card"}`}
         >
-          <span className="faction-label">
-            {character.faction === "GOOD" ? (
-              <Shield size={17} />
+          <div className="character-artwork">
+            {!artFailed ? (
+              <img
+                className="character-portrait"
+                src={`${import.meta.env.BASE_URL}assets/characters/${CHARACTER_ART[character.role].file}`}
+                alt={CHARACTER_ART[character.role].alt}
+                width={720}
+                height={1080}
+                decoding="async"
+                onError={() => setArtFailed(true)}
+              />
             ) : (
-              <Swords size={17} />
-            )}{" "}
-            {character.faction === "GOOD"
-              ? "Loyal to the crown"
-              : "Enemy of the crown"}
-          </span>
-          <Emblem className="character-emblem" size={60} strokeWidth={1} />
-          <h2>{character.role}</h2>
-          <div className="character-title">{details?.title}</div>
-          <p>{details?.description}</p>
-          <div className="private-knowledge">
-            <h3>Your private knowledge</h3>
-            <p>{details?.knowledge}</p>
-            {character.known_players.length > 0 && (
-              <ul>
-                {character.known_players.map((p) => (
-                  <li key={p.id}>{p.nickname}</li>
-                ))}
-              </ul>
+              <div className="portrait-fallback" aria-hidden="true">
+                <Emblem size={76} strokeWidth={1} />
+              </div>
             )}
-            {character.known_players.length === 0 &&
-              character.role !== "Loyal Servant" &&
-              character.role !== "Oberon" && (
-                <p>No other players are visible to you.</p>
-              )}
+            <span className="faction-label">
+              {character.faction === "GOOD" ? (
+                <Shield size={17} />
+              ) : (
+                <Swords size={17} />
+              )}{" "}
+              {character.faction === "GOOD"
+                ? "Loyal to the crown"
+                : "Enemy of the crown"}
+            </span>
+            <span className="artwork-seal" aria-hidden="true">
+              <Emblem size={22} strokeWidth={1.3} />
+            </span>
           </div>
-          <Button secondary onClick={hide}>
-            <EyeOff size={17} /> Hide character
-          </Button>
+          <div className="character-identity">
+            <h2>{character.role}</h2>
+            <div className="character-title">{details?.title}</div>
+          </div>
+          <div className="character-copy">
+            <p>{details?.description}</p>
+            <div className="private-knowledge">
+              <h3>Your private knowledge</h3>
+              <p>{details?.knowledge}</p>
+              {character.known_players.length > 0 && (
+                <ul>
+                  {character.known_players.map((p) => (
+                    <li key={p.id}>{p.nickname}</li>
+                  ))}
+                </ul>
+              )}
+              {character.known_players.length === 0 &&
+                character.role !== "Loyal Servant" &&
+                character.role !== "Oberon" && (
+                  <p>No other players are visible to you.</p>
+                )}
+            </div>
+            <Button secondary onClick={hide}>
+              <EyeOff size={17} /> Hide character
+            </Button>
+          </div>
         </div>
       )}
       {error && (
